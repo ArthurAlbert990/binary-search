@@ -69,8 +69,9 @@ class Three{
     //Remove um determinado valor
     //Como um node será excluído é necessário redefinir
     //um novo node para atualizar a árvore
+    //utiliza deleteNode para realizar as operações.
     delete(value){
-        this.root = this.deleteNode(this.root,value)
+        this.root = this.deleteNode(this.root,value);
     }
     deleteNode(node,keyValue){
         //Se valor == null, árvore vazia
@@ -79,8 +80,110 @@ class Three{
         if(node===null){
             return null
         }else if(keyValue<node.value){
-            node.left = this.deleteNode(node.left, keyValue)
-        } //parei aqui
+            node.left = this.deleteNode(node.left, keyValue);
+            return node;
+        }else if(keyValue>node.value){
+            node.right = this.deleteNode(node.right,keyValue);
+            return node;
+        }
+        //se valores iguais
+        else{
+            if(node.left === null && node.right === null){
+                node = null;
+                return node;
+            }
+            if(node.left === null){
+                node = node.right;
+                return node;
+            }else if(node.right === null){
+                node = node.left;
+                return node;
+            }
+            // aux armazena o próximo node, que irá "subir" a árvore.
+            let aux = this.findMinNode(node.right);//precisa criar função
+            node.value = aux.value;
+            node.right = this.deleteNode(node.right, aux.value)
+            return node;
+        }
+    }
+
+    //Percorre a árvore, método in order: primeiro esquerda completa, depois direita.
+    inOrder(node){
+        if(node !== null){
+            this.inOrder(node.left);
+            console.log(node.value);
+            this.inOrder(node.right);
+        }
+    }
+    preOrder(node){
+        if(node !== null){
+            console.log(node.value);
+            this.preOrder(node.left);
+            this.preOrder(node.right);
+        }
+    }
+    postOrder(node){
+        if(node !== null){
+            this.postOrder(node.left);
+            this.postOrder(node.right);
+            console.log(node.value);
+        }
+    }
+
+    //procura por um node a partir de u valor mínimo
+    //se esquerda == null, significa que foi o menor valor da árvore
+    // se não, percorre de maneira recursiva até null.
+    findMinNode(node){
+        if(node.left === null){
+            return node;
+        } else{
+            return this.findMinNode(node.left)
+        }
+    }
+    //retorna root da árvore
+    getRootNode(){
+        return this.root
+    }
+    //encontra node com x valor, retorna node no else
+    search(node, value){
+        if(node === null){
+            return null
+        }else if(value < node.value){
+            return this.search(node.left,value)
+        }else if(value > node.right){
+            return this.search(node.right, value)
+        }
+        else{
+            return node
+        }
+    }
+
+    //mede a "altura" de determinado node
+    height(node = this.getRootNode(), value){
+        let count = 0;
+        if(node === null){
+            return null
+        }else if(value < node.value){
+            count++;
+            return this.search(node.left,value)
+        }else if(value > node.right){
+            count++
+            return this.search(node.right, value)
+        }
+        else{
+            count++
+            console.log(`Height: ${count}`)
+            return count
+        }
+    }
+    depth(){
+
+    }
+    isBalanced(){
+
+    }
+    rebalance(){
+
     }
 }
 
@@ -121,3 +224,9 @@ console.log(three.root)
 //07:52 às 08:41. tentando manter recursivo.
 //08:58 às 09:44. //criar método de insert/delete.
 //10:00 às 10:06 // criando função delete
+
+//22/11
+//08:00 às 08:36
+//08:50 às 09:13, funções auxiliares.
+
+//Faltam algumas funções.
