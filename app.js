@@ -157,39 +157,20 @@ class Three{
             return node
         }
     }
-
-    //mede a "altura" de determinado node
-    height(node = this.getRootNode(), value){
-        let count = 0;
-        if(node === null){
-            return null
-        }else if(value < node.value){
-            count++;
-            return this.search(node.left,value)
-        }else if(value > node.right){
-            count++
-            return this.search(node.right, value)
-        }
-        else{
-            count++
-            console.log(`Height: ${count}`)
-            return count
-        }
-    }
-    depth(){
-
-    }
-    isBalanced(){
-
-    }
-    rebalance(){
-
-    }
 }
 
 
-const three =  new Three([2,1,3,5,6,7,8,4])
-console.log(three.root)
+//const three =  new Three([2,1,3,5,6,7,8,4])
+const three = new Three()
+three.insert(1)
+three.insert(3)
+three.insert(27)
+three.insert(5)
+three.insert(0)
+three.insert(9)
+
+
+three.inOrder(three.getRootNode())
 
 
 
